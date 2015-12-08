@@ -5,14 +5,59 @@ date: "8 December 2015"
 output: html_document
 ---
 # Preliminaries
+```{r}
+library(ggplot2)
+```
 
 ## Load in Data
 
 ```{r }
-eboladat1<-read.csv("ebola_data_db_format.csv", as.is = c(3))
-str(eboladat1)
-levels(eboladat1$Indicator)
+eboladat<-read.csv("ebola_data_db_format.csv", as.is = c(3))
+str(eboladat)
+levels(eboladat$Indicator)
+levels(eboladat$Country)
+eboladat1<-eboladat[eboladat$Country=="Guinea"|eboladat$Country =="Sierra Leone"|eboladat$Country=="Liberia",]
+indicators<-levels(eboladat1$Indicator)
+eb.cfr.c.ebc<-eboladat1[eboladat1$Indicator == indicators[1],]
+head(eb.cfr.c.ebc)
+eb.cfr.cps.ebc<-eboladat1[eboladat1$Indicator == indicators[2],]
+head(eb.cfr.cps.ebc)
+eb.cfr.p.ebc<-eboladat1[eboladat1$Indicator == indicators[3],]
+head(eb.cfr.p.ebc)
+eb.cfr.s.ebc<-eboladat1[eboladat1$Indicator == indicators[4],]
+head(eb.cfr.s.ebc)
+eb.cumm.ebc<-eboladat1[eboladat1$Indicator == indicators[5],]
+head(eb.cumm.ebc)
+eb.cumm.c.ebd<-eboladat1[eboladat1$Indicator == indicators[6],]
+head(eb.cumm.c.ebd)
+eb.cumm.cps.ebc<-eboladat1[eboladat1$Indicator == indicators[7],]
+head(eb.cumm.cps.ebc)
+eb.cumm.cps.ebd<-eboladat1[eboladat1$Indicator == indicators[8],]
+head(eb.cumm.cps.ebd)
+eb.cumm.p.ebc<-eboladat1[eboladat1$Indicator == indicators[9],]
+head(eb.cumm.p.ebc)
+eb.cumm.p.ebd<-eboladat1[eboladat1$Indicator == indicators[10],]
+head(eb.cumm.p.ebd)
+eb.cumm.s.ebc<-eboladat1[eboladat1$Indicator == indicators[10],]
+head(eb.cumm.s.ebc)
+eb.cumm.s.ebc<-eboladat1[eboladat1$Indicator == indicators[11],]
+head(eb.cumm.s.ebc)
+eb.cumm.s.ebd<-eboladat1[eboladat1$Indicator == indicators[12],]
+head(eb.cumm.s.ebd)
 ```
+
+## Exploratory Analysis
+
+```{r }
+summary(eb.cumm.c.ebc$value)
+hist(eb.cumm.c.ebc$value, col = "grey")
+eb.cumm.c.ebc$Country<-factor(eb.cumm.c.ebc$Country)
+boxplot(eb.cumm.c.ebc$value~eb.cumm.c.ebc$Country)
+ggplot(data=eb.cumm.c.ebc,aes(x=Date, y=value, colour=Country)) +geom_line(size = 1)+ labs(title="Sequence Chart of Ebola Confirmed Cases")
+
+
+```
+
 
 
 
