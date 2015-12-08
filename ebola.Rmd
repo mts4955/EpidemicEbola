@@ -4,6 +4,16 @@ author: "Taiwo"
 date: "8 December 2015"
 output: html_document
 ---
+# Preliminaries
+
+## Load in Data
+
+```{r }
+eboladat1<-read.csv("ebola_data_db_format.csv", as.is = c(3))
+str(eboladat1)
+levels(eboladat1$Indicator)
+```
+
 
 
 
