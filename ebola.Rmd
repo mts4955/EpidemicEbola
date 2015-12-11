@@ -7,6 +7,7 @@ output: html_document
 # Preliminaries
 ```{r}
 library(ggplot2)
+library(lubridate)
 ```
 
 ## Load in Data
@@ -17,6 +18,7 @@ str(eboladat)
 levels(eboladat$Indicator)
 levels(eboladat$Country)
 eboladat1<-eboladat[eboladat$Country=="Guinea"|eboladat$Country =="Sierra Leone"|eboladat$Country=="Liberia",]
+eboladat1$Date<-ymd(eboladat1$Date)
 indicators<-levels(eboladat1$Indicator)
 eb.cfr.c.ebc<-eboladat1[eboladat1$Indicator == indicators[1],]
 head(eb.cfr.c.ebc)
@@ -26,8 +28,8 @@ eb.cfr.p.ebc<-eboladat1[eboladat1$Indicator == indicators[3],]
 head(eb.cfr.p.ebc)
 eb.cfr.s.ebc<-eboladat1[eboladat1$Indicator == indicators[4],]
 head(eb.cfr.s.ebc)
-eb.cumm.ebc<-eboladat1[eboladat1$Indicator == indicators[5],]
-head(eb.cumm.ebc)
+eb.cumm.c.ebc<-eboladat1[eboladat1$Indicator == indicators[5],]
+head(eb.cumm.c.ebc)
 eb.cumm.c.ebd<-eboladat1[eboladat1$Indicator == indicators[6],]
 head(eb.cumm.c.ebd)
 eb.cumm.cps.ebc<-eboladat1[eboladat1$Indicator == indicators[7],]
@@ -48,17 +50,32 @@ head(eb.cumm.s.ebd)
 
 ## Exploratory Analysis
 
+### Confirmed Ebola Cases
 ```{r }
 summary(eb.cumm.c.ebc$value)
 hist(eb.cumm.c.ebc$value, col = "grey")
+hist(eb.cumm.c.ebc$value[eb.cumm.c.ebc$Country=="Liberia"], col = "green")
+hist(eb.cumm.c.ebc$value[eb.cumm.c.ebc$Country=="Guinea"], col = "red")
+hist(eb.cumm.c.ebc$value[eb.cumm.c.ebc$Country=="Sierra Leone"], col = "blue")
 eb.cumm.c.ebc$Country<-factor(eb.cumm.c.ebc$Country)
 boxplot(eb.cumm.c.ebc$value~eb.cumm.c.ebc$Country)
-ggplot(data=eb.cumm.c.ebc,aes(x=Date, y=value, colour=Country)) +geom_line(size = 1)+ labs(title="Sequence Chart of Ebola Confirmed Cases")
+ggplot(data=eb.cumm.c.ebc,aes(x=Date, y=value, colour=Country)) +geom_line(size = 1)+ labs(title="Sequence Chart Cummulative of Ebola Confirmed Cases")
 
 
 ```
 
+### Confirmed Ebola Deaths
+```{r }
+summary(eb.cumm.c.ebd$value)
+hist(eb.cumm.c.ebd$value, col = "grey")
+hist(eb.cumm.c.ebd$value[eb.cumm.c.ebd$Country=="Liberia"], col = "green")
+hist(eb.cumm.c.ebd$value[eb.cumm.c.ebd$Country=="Guinea"], col = "red")
+hist(eb.cumm.c.ebd$value[eb.cumm.c.ebd$Country=="Sierra Leone"], col = "blue")
+eb.cumm.c.ebd$Country<-factor(eb.cumm.c.ebd$Country)
+boxplot(eb.cumm.c.ebd$value~eb.cumm.c.ebd$Country)
+ggplot(data=eb.cumm.c.ebd,aes(x=Date, y=value, colour=Country)) +geom_line(size = 1)+ labs(title="Sequence Chart of Cummulative Ebola Confirmed Dates")
 
+```
 
 
 
