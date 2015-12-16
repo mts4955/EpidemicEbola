@@ -28,20 +28,19 @@ ui <- fluidPage(
 )
 )
 )
+
 server <- function(input, output, session) {
   output$trend<- renderPlot({
     if (input$countryInput == "All Countries"){
-      filtered <- eboladat %>% 
-        filter(Indicator == input$indicatorInput)
-      print(summary(filtered$value))
+      filtered <- eboladat1 %>% 
+        filter(Indicator == input$indicatorInput, Country == "Guinea"|Country == "Sierra Leone"| Country == "Liberia")
       ggplot(data=filtered,aes(x=Date, y=value, colour=Country)) +geom_line(size = 1)+ labs(title=input$indicatorInput)
       
     }
     else{
-      filtered <- eboladat %>% 
+      filtered <- eboladat1 %>% 
         filter(Country == input$countryInput, Indicator == input$indicatorInput)
-      print(summary(filtered$value))
-      #ggplot(filtered, aes(value))+geom_histogram()
+      ggplot(data=filtered,aes(x=Date, y=value, colour=Country)) +geom_line(size = 1)+ labs(title=input$indicatorInput)
     }  
     
   })
