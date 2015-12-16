@@ -1,0 +1,8 @@
+name: EbolaDatabseExplorer
+account: mts4955
+server: shinyapps.io
+bundleId: 331585
+url: https://mts4955.shinyapps.io/EbolaDatabseExplorer
+when: 1450166426.28045
+asMultiple: FALSE
+asStatic: FALSE
